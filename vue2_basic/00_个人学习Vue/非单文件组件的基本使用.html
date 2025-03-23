@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>非单文件组件的基本使用</title>
+        <script type="text/javascript" src="../js/vue.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <school></school>
+            <hr />
+            <student></student>
+            <hr />
+            <hello></hello>
+        </div>
+
+        <script type="text/javascript">
+            Vue.config.productionTip = false;
+
+            // 全局部件定义
+            const hello = Vue.extend({
+                template: `
+                    <div>
+                        <h2>Hello,{{name}}!!!</h2>
+                        <h2>{{msg}}</h2>                            
+                    </div>
+                `,
+                data() {
+                    return {
+                        name: 'Mr.Salmon',
+                        msg: 'Hello Mr.Salmon!!',
+                    };
+                },
+            });
+
+            const school = Vue.extend({
+                template: `
+                    <div>
+                        <h2>学校名称：{{schoolName}}</h2>
+                        <h2>学校地址：{{address}}</h2>
+                        <button @click="showName">点我提示学校名</button>
+                    </div>
+                `,
+                data() {
+                    return {
+                        schoolName: '山东邮政',
+                        address: '顺德区大良南国东路',
+                    };
+                },
+                methods: {
+                    showName() {
+                        alert(this.address);
+                    },
+                },
+            });
+
+            const student = Vue.extend({
+                template: `
+                    <div>
+                        <h2>学生名称：{{studentName}}</h2>
+                        <h2>学生年龄：{{age}}</h2>
+                        <button @click="showName">点我提示学生姓名</button>
+                    </div>
+                `,
+                data() {
+                    return {
+                        studentName: '三文鱼',
+                        age: 20,
+                    };
+                },
+                methods: {
+                    showName() {
+                        alert(this.studentName);
+                    },
+                },
+            });
+
+            // 添加该全局组件的声明必须在全局组件定义的下方
+            Vue.component('hello', hello);
+
+            new Vue({
+                el: '#root',
+                data: {
+                    msg: '我是超级三文鱼',
+                },
+                components: {
+                    school,
+                    student,
+                },
+            });
+        </script>
+    </body>
+</html>
